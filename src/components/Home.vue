@@ -39,13 +39,18 @@
 
     <v-container>
     <v-row justify="space-around" class="ma-5">
-      <v-card width="350" class="ma-2" v-for="n in 9" :key="n" outlined tile>
+
+     
+
+ 
+      <v-card width="350" class="ma-2" v-for="(pr, index) of product" :key="index" outlined tile>
         <v-img
           height="200px"
-          src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-        >
+          src="@/assets/images/car1.jpg" 
+        
+        > 
           <v-app-bar flat color="rgba(0, 0, 0, 0)">
-            <v-toolbar-title class="text-h6 white--text pl-0">Messages</v-toolbar-title>
+            <v-toolbar-title class="text-h6 white--text pl-0">${{pr.price}}</v-toolbar-title>
 
             <v-spacer></v-spacer>
           </v-app-bar>
@@ -56,16 +61,16 @@
         <v-card-text>
           <div>
             <div class="font-weight-normal">
-              <strong>2020 Cherry red car</strong>
+              <strong>{{pr.name}}</strong>
             </div>
-            <div>Model : A2</div>
-            <div>Year : 2016</div>
+            <div>Model : {{pr.model}}</div>
+            <div>Year : {{pr.year}}</div>
           </div>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="grey" width="90%" dark @click="detailpage">More Details</v-btn>
+          <v-btn color="grey" width="90%" dark @click="detailpage(pr.id)">More Details</v-btn>
 
           <v-spacer></v-spacer>
         </v-card-actions>
@@ -77,18 +82,33 @@
 </template>
 
 <script>
+
+ import jsonData from "../../data";
 export default {
-  name: "HelloWorld",
+  name: "Home",
 
   data: () => ({
-    
+    valid: false,
+    firstname: "",
+    lastname: "",
+    product : jsonData.products,
+    nameRules: [
+      (v) => !!v || "Name is required",
+      (v) => v.length <= 10 || "Name must be less than 10 characters",
+    ],
+    email: "",
+    emailRules: [
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+/.test(v) || "E-mail must be valid",
+    ],
   }),
+  
   methods:{
-    detailpage() { 
+    detailpage(id) { 
        this.$router.push({
         name: "DetailById",
-        // params: { id: this.id },
-         params: { id: Math.floor(Math.random() * 100)},
+        params: { id: id },
+         
       });
     },
   }
