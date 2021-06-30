@@ -13,18 +13,26 @@
 export default {
   data: () => ({
     id: "",
-    detailedProduct: "",
-    product: jsonData.products,
+    car: "",
   }),
   created() {
     if (typeof this.$route.params.id != "undefined") {
       this.id = this.$route.params.id;
-      this.productDetails(this.id);
+    }
+  },
+  mounted() {
+    if (this.$store.getters.allCars.status == false) {
+      this.$store.dispatch("loadCars").then(() => {
+        this.productDetails();
+      });
+    } else {
+      this.productDetails();
     }
   },
   methods: {
-    productDetails(id) {
-      this.detailedProduct = this.product.find((n) => n.id === id);
+    productDetails() {
+      this.car = this.$store.getters.getCarByFilter("id", this.id);
+      console.log(this.$store.getters.getCarById(3));
     },
   },
 };

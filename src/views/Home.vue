@@ -14,7 +14,7 @@
                   label="Model"
                   dense
                   outlined
-                  @change="filter"
+                  @change="filterData"
                 ></v-select>
               </v-col>
 
@@ -25,12 +25,12 @@
                   label="Year"
                   dense
                   outlined
-                  @change="filter"
+                  @change="filterData"
                 ></v-select>
               </v-col>
 
               <v-col cols="12" md="4">
-                <v-text-field v-model="name" outlined label="Name" required @change="filter"></v-text-field>
+                <v-text-field v-model="name" outlined label="Name" required @change="filterData"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -41,8 +41,8 @@
 
     <v-container>
       <v-row justify="space-around" class="ma-5">
-        <v-col md="4" v-for="product in products" :key="product.id">
-          <car-widget v-bind="product"></car-widget>
+        <v-col md="4" v-for="car in cars" :key="car.id">
+          <car-widget v-bind="car"></car-widget>
         </v-col>
       </v-row>
     </v-container>
@@ -50,8 +50,6 @@
 </template>
 
 <script>
-import jsonData from "../../data";
-import axios from "axios";
 import CarWidget from "../components/CarWidget.vue";
 export default {
   name: "Home",
@@ -64,21 +62,19 @@ export default {
     year: "",
     name: "",
     items: ["Foo", "Bar", "Fizz", "Buzz"],
-    product: jsonData.products,
   }),
   mounted() {
-    axios.get("./data.json").then((res) => {
-      console.log(res.data);
-    });
+    if (this.$store.getters.allCars.status == false) {
+      this.$store.dispatch("loadCars");
+    }
   },
-
-  methods: {
-    detailpage(id) {
-      this.$router.push({
-        name: "DetailById",
-        params: { id: id },
-      });
+  computed: {
+    cars() {
+      return this.$store.getters.allCars.data;
     },
+  },
+  methods: {
+    filterData() {},
   },
 };
 </script>

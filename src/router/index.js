@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Detail from '../views/detail';
+import CarDetails from '../views/CarDetails';
 import Home from '../views/Home';
 
 Vue.use(VueRouter);
@@ -15,7 +15,7 @@ const routes = [
     {
         name: 'DetailById',
         path: '/detail/:id',
-        component: Detail,
+        component: CarDetails,
     },
 ];
 

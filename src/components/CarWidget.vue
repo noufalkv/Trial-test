@@ -36,11 +36,11 @@ export default {
   name: "Home",
   props: {
     id: { type: Number },
-    name: { type: Number },
-    model: { type: Number },
-    year: { type: String },
+    name: { type: String },
+    model: { type: String },
+    year: { type: Number },
     image: { type: String },
-    price: { type: String },
+    price: { type: Number },
     description: { type: String },
   },
 

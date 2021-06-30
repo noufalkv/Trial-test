@@ -1,50 +1,57 @@
 import axios from "axios";
 
 const getDefaultState = () => {
-  return {
-    cars: { status: false, data: [] },
-  };
+    return {
+        cars: { status: false, data: [] },
+    };
 };
 
 const state = getDefaultState();
 
 const getters = {
-  allCars: (state) => state.cars,
+    allCars: (state) => state.cars,
+    getCarByFilter: (state) => (field, value) => {
+        return state.cars.data.filter(car =>
+            car[field] == value
+        )
+    },
+    getCarById: (state) => (id) => {
+        console.log(id);
+        return state.cars.data.find(car => car.id == 3)
+    }
 };
 
 const actions = {
-  getStageList({ commit }) {
-    return new Promise((resolve, reject) => {
-      axios
-        .get("./data.json")
-        .then((response) => {
-          if (response.status == 200) {
-            commit("setCars", response.data);
-            resolve(response);
-          }
-          reject(response);
-        })
-        .catch((err) => {
-          reject(err);
+    loadCars({ commit }) {
+        return new Promise((resolve, reject) => {
+            axios
+                .get("/data.json")
+                .then((response) => {
+                    console.log(response.data);
+                    commit("setCars", response.data);
+                    resolve(response);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
-    });
-  },
+    },
 
 };
 const mutations = {
-  resetGeneralState(state) {
-    Object.assign(state, getDefaultGeneralState());
-  },
-  setCars: (state, stages) => {
-    state.cars.status = true;
-    state.car.data = stages;
-  },
-  
+    resetState(state) {
+        Object.assign(state, getDefaultState());
+    },
+    setCars: (state, cars) => {
+        state.cars.status = true;
+        state.cars.data = cars;
+    },
+
 };
 
 export default {
-  state,
-  getters,
-  actions,
-  mutations,
+    state,
+    getters,
+    actions,
+    mutations,
 };
