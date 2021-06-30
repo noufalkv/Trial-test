@@ -1,28 +1,70 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar app color="black" dark height="150" >
+      <v-spacer></v-spacer>
+
+      <v-card class="mx-auto" outlined>
+        <v-form v-model="valid">
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="firstname"
+                  :rules="nameRules"
+                  :counter="10"
+                  label="First name"
+                  required
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="lastname"
+                  :rules="nameRules"
+                  :counter="10"
+                  label="Last name"
+                  required
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <v-main>
+      <Home />
+    </v-main>
+  </v-app>
 </template>
+ 
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Home from "./components/Home";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    Home,
+  },
+  data: () => ({
+    valid: false,
+    firstname: "",
+    lastname: "",
+    nameRules: [
+      (v) => !!v || "Name is required",
+      (v) => v.length <= 10 || "Name must be less than 10 characters",
+    ],
+    email: "",
+    emailRules: [
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+/.test(v) || "E-mail must be valid",
+    ],
+  }),
+};
+</script>
