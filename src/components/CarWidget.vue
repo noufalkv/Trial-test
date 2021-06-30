@@ -4,7 +4,7 @@
       <!-- <v-img height="200px" :src="pr.image"> -->
 
       <v-app-bar flat color="rgba(0, 0, 0, 0)">
-        <v-toolbar-title class="text-h6 white--text pl-0">${{price}}</v-toolbar-title>
+        <v-toolbar-title class="text-h6 white--text pl-0 price pl-3 pr-3">${{price}}</v-toolbar-title>
 
         <v-spacer></v-spacer>
       </v-app-bar>
@@ -54,3 +54,9 @@ export default {
   },
 };
 </script>
+<style>
+.price {
+  background: grey;
+  border-radius: 10px;
+}
+</style>
