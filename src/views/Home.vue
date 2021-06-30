@@ -8,25 +8,27 @@
           <v-container>
             <v-row>
               <v-col cols="12" md="4">
-                <v-select
+                <v-autocomplete
                   v-model="filter.model"
                   :items="modelData"
                   label="Model"
                   dense
                   outlined
+                  clearable
                   @change="filterData"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="12" md="4">
-                <v-select
+                <v-autocomplete
                   v-model="filter.year"
                   :items="yearData"
                   label="Year"
                   dense
+                  clearable
                   outlined
                   @change="filterData"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="12" md="4">
@@ -78,7 +80,7 @@ export default {
   },
   computed: {
     modelData() {
-      return this.$store.getters.getCarData("name");
+      return this.$store.getters.getCarData("model");
     },
     cars() {
       return this.$store.getters.allCars.data;
