@@ -24,7 +24,7 @@ const data = {
       name: 'Nissan Sunny',
       model: 'model 1',
       year: 2000,
-      image: '/images/car3.jpg',
+      image: '@/assets/images/car3.jpg',
       price: 32000,
       description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, fugit omnis? Adipisci quasi illum eligendi? Illo excepturi aspernatur fuga, consequuntur, fugit ipsam commodi quidem ab dolorem cupiditate animi cum unde.',
     },
