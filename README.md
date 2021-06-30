@@ -1,7 +1,7 @@
 # Vue JS User Dashboard
 
 ## Demo
-Please click [here](https://shafeequeom.github.io/VueDashboad) to view [demo](https://shafeequeom.github.io/VueDashboad)
+Please click [here](https://noufalkv.github.io/Trial-test) to view [demo](https://noufalkv.github.io/Trial-test)
 ```
 /////////////////////////////////
 ```
