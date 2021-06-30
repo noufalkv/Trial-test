@@ -10,14 +10,11 @@ const state = getDefaultState();
 
 const getters = {
     allCars: (state) => state.cars,
-    getCarByFilter: (state) => (field, value) => {
-        return state.cars.data.filter(car =>
-            car[field] == value
-        )
+    getCarData: (state) => (field) => {
+        return state.cars.data.map(car => car[field])
     },
     getCarById: (state) => (id) => {
-        console.log(id);
-        return state.cars.data.find(car => car.id == 3)
+        return state.cars.data.find(car => car.id == id)
     }
 };
 
@@ -27,7 +24,6 @@ const actions = {
             axios
                 .get("/data.json")
                 .then((response) => {
-                    console.log(response.data);
                     commit("setCars", response.data);
                     resolve(response);
                 })

@@ -4,13 +4,13 @@
       <v-spacer></v-spacer>
 
       <v-card class="mx-auto" outlined>
-        <v-form v-model="valid">
+        <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" md="4">
                 <v-select
-                  v-model="carmodel"
-                  :items="items"
+                  v-model="filter.model"
+                  :items="modelData"
                   label="Model"
                   dense
                   outlined
@@ -20,8 +20,8 @@
 
               <v-col cols="12" md="4">
                 <v-select
-                  v-model="year"
-                  :items="items"
+                  v-model="filter.year"
+                  :items="yearData"
                   label="Year"
                   dense
                   outlined
@@ -30,7 +30,14 @@
               </v-col>
 
               <v-col cols="12" md="4">
-                <v-text-field v-model="name" outlined label="Name" required @change="filterData"></v-text-field>
+                <v-text-field
+                  v-model="filter.name"
+                  dense
+                  outlined
+                  label="Name"
+                  required
+                  @change="filterData"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -41,7 +48,7 @@
 
     <v-container>
       <v-row justify="space-around" class="ma-5">
-        <v-col md="4" v-for="car in cars" :key="car.id">
+        <v-col md="4" v-for="car in products" :key="car.id">
           <car-widget v-bind="car"></car-widget>
         </v-col>
       </v-row>
@@ -57,24 +64,51 @@ export default {
     "car-widget": CarWidget,
   },
   data: () => ({
-    valid: false,
-    carmodel: "",
-    year: "",
-    name: "",
-    items: ["Foo", "Bar", "Fizz", "Buzz"],
+    filter: {},
+    products: [],
   }),
   mounted() {
     if (this.$store.getters.allCars.status == false) {
-      this.$store.dispatch("loadCars");
+      this.$store.dispatch("loadCars").then(() => {
+        this.filterData();
+      });
+    } else {
+      this.filterData();
     }
   },
   computed: {
+    modelData() {
+      return this.$store.getters.getCarData("name");
+    },
     cars() {
       return this.$store.getters.allCars.data;
     },
+    yearData() {
+      return Array.from(Array(new Date().getFullYear() - 1949), (_, i) =>
+        (i + 1950).toString()
+      );
+    },
   },
   methods: {
-    filterData() {},
+    filterData() {
+      this.products = this.cars;
+      if (this.filter.name) {
+        this.products = this.products.filter((item) => {
+          let name = item.name.toLowerCase();
+          return name.includes(this.filter.name);
+        });
+      }
+      if (this.filter.model) {
+        this.products = this.products.filter(
+          (item) => item.model == this.filter.model
+        );
+      }
+      if (this.filter.year) {
+        this.products = this.products.filter(
+          (item) => item.year == this.filter.year
+        );
+      }
+    },
   },
 };
 </script>
