@@ -86,8 +86,8 @@ export default {
       return this.$store.getters.allCars.data;
     },
     yearData() {
-      return Array.from(Array(new Date().getFullYear() - 1949), (_, i) =>
-        (i + 1950).toString()
+      return Array.from(Array(new Date().getFullYear() - 1980), (_, i) =>
+        (i + 2000).toString()
       );
     },
   },
